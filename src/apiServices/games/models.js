@@ -1,27 +1,12 @@
 import { Schema, model } from "mongoose";
 import { publicUrl } from '../../services/file';
 
-const blankMsg = 'es obligatorio';
-const gameSchema = Schema({
-	name: {
-		type: String,
-		Required: [true, blankMsg]
-	},
-	description: {
-		type: String,
-		Required: [true, blankMsg]
-	},
-	gender: {
-		type: String,
-		Required: [true, blankMsg]
-	},
-	imgKey: {
-		type: String,
-		Required: [true, blankMsg]
-	},
-	publicUrl: {
-		type: String
-	}
+const gameSchema = new Schema({
+	name: { type: String, required: true, unique: true },
+	description: { type: String, required: true },
+	gender: { type: String, required: true },
+	imgKey: { type: String, required: true },
+	publicUrl: { type: String }
 })
 
 gameSchema.set('toJSON', {
@@ -33,4 +18,4 @@ gameSchema.set('toJSON', {
 	}
 });
 
-export default model('Game', gameSchema)
+export default model('Game', gameSchema);
