@@ -1,16 +1,26 @@
+import { upload } from '../../services/file';
 import Game from './models';
 
 module.exports = {
-	async getGames(req, res) {
-		const { page } = req.query;
+	async getGames(request, response) {
+		const { page } = request.query;
 		const games = await Game.find().limit(Number(page ? page : 0));
-		res.json(games).status(200);
+		response.json(games).status(200);
 	},
 
-	async getGame(req, res) {
-		const game = await Game.findById(req.params.id);
+	async getGame(request, response) {
+		const game = await Game.findById(request.params.id);
 
-		if (!game) return res.status(404);
-		res.json(game).status(200);
+		if (!game) return response.status(404);
+		response.json(game).status(200);
+	},
+
+	async CreateGame(request, response) {
+		const imgKey = await upload(request.file.path, request.file.originalname);
+		const { ... params } = request.body;
+		const game = new Game(params);
+		game.imgKey = imgKey;
+		await game.save();
+		response.json(game);
 	}
 }
