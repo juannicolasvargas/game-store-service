@@ -31,5 +31,6 @@ router.post('/', [
 	}),
 	validateParams
 ], controller.CreateGame);
+router.delete('/:id', controller.deleteGame)
 
 export default router;

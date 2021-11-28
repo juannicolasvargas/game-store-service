@@ -14,7 +14,7 @@ export const upload = async(filePath, fileKey) => {
 	};
 
 	const response = await s3.upload(params).promise();
-	removeTemFile(filePath);
+	removeTempFile(filePath);
 	return response.key;
 }
 
@@ -28,7 +28,7 @@ export const publicUrl = (fileKey) => {
 	return url;
 } 
 
-const removeTemFile = (filePath) => {
+const removeTempFile = (filePath) => {
 	fs.unlink(filePath, (err) => {
 		if (err) {
 			console.error(err);

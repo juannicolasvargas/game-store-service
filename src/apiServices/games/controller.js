@@ -22,5 +22,11 @@ module.exports = {
 		game.imgKey = imgKey;
 		await game.save();
 		response.json(game);
+	},
+
+	async deleteGame(request, response) {
+		await Game.findById(request.params.id).remove();
+
+		response.json({success: 'done'});
 	}
 }
