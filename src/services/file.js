@@ -13,7 +13,8 @@ export const upload = async(filePath, fileKey) => {
 		Body: fileStream
 	};
 
-	const response = await s3.upload(params).promise()
+	const response = await s3.upload(params).promise();
+	removeTemFile(filePath);
 	return response.key;
 }
 
@@ -26,3 +27,11 @@ export const publicUrl = (fileKey) => {
 	});
 	return url;
 } 
+
+const removeTemFile = (filePath) => {
+	fs.unlink(filePath, (err) => {
+		if (err) {
+			console.error(err);
+		}
+	})
+}
